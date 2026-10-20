@@ -1,0 +1,2846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Deposit Desk Pro</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #070909;
+    --panel: #101414;
+    --panel2: #151a1a;
+    --border: #282f2f;
+    --green: #00ff88;
+    --green2: #00d875;
+    --gold: #ffd700;
+    --silver: #cfd4d8;
+    --bronze: #cd7f32;
+    --orange: #ffad00;
+    --red: #ff4545;
+    --white: #ffffff;
+    --muted: #858d8d;
+}
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+    background: var(--bg);
+    color: var(--white);
+    font-family: Inter, Arial, Helvetica, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+}
+
+button,
+input,
+select {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* =========================================================
+   HOME PAGE
+========================================================= */
+
+#homePage {
+    display: block;
+    min-height: 100vh;
+}
+
+.topbar {
+    height: 76px;
+    background: #0d1010;
+    border-bottom: 1px solid var(--border);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 28px;
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.brand {
+    font-size: 25px;
+    font-weight: 900;
+    letter-spacing: -1px;
+}
+
+.brand span {
+    color: var(--green);
+}
+
+.brand .brand-sep {
+    color: var(--muted);
+    margin: 0 6px;
+}
+
+.live {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.live-dot {
+    width: 8px;
+    height: 8px;
+
+    background: var(--green);
+    border-radius: 50%;
+
+    box-shadow: 0 0 14px var(--green);
+}
+
+.home-container {
+    width: min(1500px, 96%);
+    margin: 0 auto;
+
+    padding: 25px 0 100px;
+}
+
+/* =========================================================
+   TOP 5
+========================================================= */
+
+.top5-title {
+    margin: 4px 0 15px;
+
+    color: var(--green);
+
+    font-size: 15px;
+    font-weight: 900;
+
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.top5 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+
+    gap: 14px;
+
+    margin-bottom: 25px;
+}
+
+.rank-card {
+    min-height: 180px;
+
+    position: relative;
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.045),
+            rgba(255,255,255,.01)
+        ),
+        var(--panel);
+
+    border: 1px solid var(--border);
+    border-radius: 18px;
+
+    padding: 18px;
+
+    box-shadow:
+        0 14px 40px rgba(0,0,0,.25);
+
+    transition: .2s;
+}
+
+.rank-card:hover {
+    transform: translateY(-3px);
+}
+
+.rank-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 4px;
+
+    background: #333;
+}
+
+.rank-card.gold {
+    border-color: rgba(255,215,0,.55);
+
+    box-shadow:
+        0 0 40px rgba(255,215,0,.08);
+}
+
+.rank-card.gold::before {
+    background: var(--gold);
+}
+
+.rank-card.silver {
+    border-color: rgba(207,212,216,.45);
+}
+
+.rank-card.silver::before {
+    background: var(--silver);
+}
+
+.rank-card.bronze {
+    border-color: rgba(205,127,50,.5);
+}
+
+.rank-card.bronze::before {
+    background: var(--bronze);
+}
+
+.rank-number {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.rank-name {
+    font-size: 18px;
+    font-weight: 800;
+
+    margin-bottom: 10px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rank-label {
+    color: var(--muted);
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+}
+
+.rank-total {
+    color: var(--green);
+
+    font-size: 25px;
+    font-weight: 900;
+
+    margin-top: 4px;
+}
+
+.rank-empty {
+    color: #555;
+
+    text-align: center;
+
+    padding-top: 48px;
+
+    font-size: 13px;
+}
+
+/* =========================================================
+   BOARD
+========================================================= */
+
+.board-panel {
+    background: var(--panel);
+
+    border: 1px solid var(--border);
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 18px 55px rgba(0,0,0,.3);
+}
+
+.board-header {
+    padding: 20px 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.board-title {
+    font-size: 16px;
+    font-weight: 900;
+
+    text-transform: uppercase;
+    letter-spacing: .7px;
+}
+
+.agent-count {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    padding: 15px 20px;
+
+    background: #171c1c;
+
+    color: var(--green);
+
+    text-align: left;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+    letter-spacing: .6px;
+
+    white-space: nowrap;
+}
+
+td {
+    padding: 17px 20px;
+
+    border-bottom: 1px solid var(--border);
+
+    font-size: 14px;
+}
+
+tbody tr {
+    transition: .15s;
+}
+
+tbody tr:hover {
+    background: #151a1a;
+}
+
+tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.agent-name {
+    font-weight: 800;
+}
+
+.money {
+    color: var(--green);
+    font-weight: 800;
+}
+
+.empty-board {
+    text-align: center;
+    padding: 75px 20px;
+    color: var(--muted);
+}
+
+.empty-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+.empty-title {
+    color: white;
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 7px;
+}
+
+/* =========================================================
+   SMALL ADMIN BUTTON
+========================================================= */
+
+.admin-launch {
+    position: fixed;
+
+    right: 18px;
+    bottom: 18px;
+
+    z-index: 500;
+
+    padding: 11px 17px;
+
+    background: #101414;
+
+    border: 1px solid var(--green);
+    border-radius: 10px;
+
+    color: var(--green);
+
+    font-size: 13px;
+    font-weight: 800;
+
+    box-shadow:
+        0 0 25px rgba(0,255,136,.1);
+
+    transition: .2s;
+}
+
+.admin-launch:hover {
+    background: var(--green);
+    color: #000;
+
+    transform: translateY(-2px);
+}
+
+/* =========================================================
+   LOGIN PAGE
+========================================================= */
+
+#loginPage {
+    min-height: 100vh;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0,255,136,.07),
+            transparent 42%
+        ),
+        var(--bg);
+}
+
+.login-box {
+    width: min(400px, 100%);
+
+    padding: 32px;
+
+    background: var(--panel);
+
+    border: 1px solid var(--border);
+    border-radius: 20px;
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.55);
+}
+
+.login-logo {
+    text-align: center;
+
+    font-size: 25px;
+    font-weight: 900;
+
+    margin-bottom: 8px;
+}
+
+.login-logo span {
+    color: var(--green);
+}
+
+.login-subtitle {
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    margin-bottom: 25px;
+}
+
+.login-error {
+    display: none;
+
+    padding: 10px;
+
+    margin-bottom: 13px;
+
+    background: #321313;
+
+    border: 1px solid #662323;
+    border-radius: 8px;
+
+    color: #ff6c6c;
+
+    font-size: 12px;
+
+    text-align: center;
+}
+
+/* =========================================================
+   ADMIN PAGE
+========================================================= */
+
+#adminPage {
+    display: none;
+
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(0,255,136,.06),
+            transparent 30%
+        ),
+        var(--bg);
+}
+
+.admin-topbar {
+    height: 76px;
+
+    padding: 0 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #0d1010;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.admin-title {
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.admin-title span {
+    color: var(--green);
+}
+
+.back-button {
+    padding: 10px 15px;
+
+    background: transparent;
+
+    border: 1px solid #333;
+    border-radius: 9px;
+
+    color: white;
+
+    font-weight: 700;
+}
+
+.back-button:hover {
+    color: var(--green);
+    border-color: var(--green);
+}
+
+.admin-container {
+    width: min(1100px, 94%);
+
+    margin: 0 auto;
+
+    padding: 30px 0 60px;
+}
+
+.admin-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 18px;
+}
+
+.admin-card {
+    background: var(--panel);
+
+    border: 1px solid var(--border);
+    border-radius: 17px;
+
+    padding: 22px;
+}
+
+.admin-card h2 {
+    margin: 0 0 18px;
+
+    color: var(--green);
+
+    font-size: 15px;
+    font-weight: 900;
+
+    text-transform: uppercase;
+    letter-spacing: .8px;
+}
+
+.field {
+    margin-bottom: 13px;
+}
+
+.field label {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+    margin-bottom: 6px;
+}
+
+input,
+select {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    background: #181d1d;
+
+    border: 1px solid #2b3232;
+    border-radius: 9px;
+
+    color: white;
+
+    outline: none;
+
+    font-size: 14px;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--green);
+
+    box-shadow:
+        0 0 0 2px rgba(0,255,136,.08);
+}
+
+.green-button {
+    width: 100%;
+
+    padding: 14px;
+
+    margin-top: 4px;
+
+    background: var(--green);
+
+    border: 0;
+    border-radius: 9px;
+
+    color: #000;
+
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.green-button:hover {
+    background: #20ff9c;
+}
+
+.orange-button {
+    width: 100%;
+
+    padding: 13px;
+
+    margin-top: 10px;
+
+    background: var(--orange);
+
+    border: 0;
+    border-radius: 9px;
+
+    color: #000;
+
+    font-weight: 900;
+}
+
+.secondary-button {
+    width: 100%;
+
+    padding: 12px;
+
+    margin-top: 10px;
+
+    background: #1a2020;
+
+    border: 1px solid #303838;
+    border-radius: 9px;
+
+    color: white;
+
+    font-weight: 700;
+}
+
+.secondary-button:hover {
+    border-color: var(--green);
+    color: var(--green);
+}
+
+.red-button {
+    width: 100%;
+
+    padding: 13px;
+
+    margin-top: 10px;
+
+    background: #351313;
+
+    border: 1px solid #692323;
+    border-radius: 9px;
+
+    color: #ff6464;
+
+    font-weight: 900;
+}
+
+.admin-agent-list {
+    max-height: 420px;
+
+    overflow-y: auto;
+}
+
+.admin-agent-row {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 13px 0;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.admin-agent-row:last-child {
+    border-bottom: 0;
+}
+
+.admin-agent-info {
+    min-width: 0;
+}
+
+.admin-agent-info strong {
+    display: block;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.admin-agent-info small {
+    color: var(--muted);
+}
+
+.delete-agent {
+    flex-shrink: 0;
+
+    padding: 7px 10px;
+
+    background: #281212;
+
+    border: 1px solid #5c2222;
+    border-radius: 7px;
+
+    color: #ff6464;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+/* =========================================================
+   MONEY POPUP
+========================================================= */
+
+#moneyOverlay {
+    position: fixed;
+
+    inset: 0;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: rgba(0,0,0,.94);
+
+    z-index: 5000;
+}
+
+.money-content {
+    position: relative;
+
+    z-index: 5;
+
+    text-align: center;
+
+    animation: popupIn .5s ease;
+}
+
+.money-title {
+    color: var(--green);
+
+    font-size: clamp(34px, 7vw, 76px);
+
+    font-weight: 900;
+
+    letter-spacing: -2px;
+
+    text-shadow:
+        0 0 10px rgba(0,255,136,.9),
+        0 0 35px rgba(0,255,136,.4);
+
+    animation: pulseMoney .8s infinite;
+}
+
+.money-agent {
+    margin-top: 14px;
+
+    color: white;
+
+    font-size: 20px;
+}
+
+.money-amount {
+    margin-top: 10px;
+
+    color: var(--gold);
+
+    font-size: 44px;
+    font-weight: 900;
+
+    text-shadow:
+        0 0 20px rgba(255,215,0,.3);
+}
+
+.money-subtitle {
+    margin-top: 8px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+.cash {
+    position: absolute;
+
+    top: -80px;
+
+    z-index: 2;
+
+    font-size: 36px;
+
+    pointer-events: none;
+
+    animation: moneyFall linear forwards;
+}
+
+@keyframes popupIn {
+
+    from {
+        opacity: 0;
+        transform: scale(.45);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulseMoney {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.06);
+    }
+}
+
+@keyframes moneyFall {
+
+    from {
+        transform:
+            translateY(-100px)
+            rotate(0deg);
+
+        opacity: 1;
+    }
+
+    to {
+        transform:
+            translateY(115vh)
+            rotate(720deg);
+
+        opacity: 0;
+    }
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+#toast {
+    position: fixed;
+
+    left: 50%;
+    bottom: 25px;
+
+    z-index: 7000;
+
+    transform:
+        translateX(-50%)
+        translateY(20px);
+
+    padding: 12px 20px;
+
+    background: #101414;
+
+    border: 1px solid var(--green);
+    border-radius: 9px;
+
+    color: var(--green);
+
+    font-size: 13px;
+    font-weight: 800;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: .25s;
+}
+
+#toast.show {
+    opacity: 1;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .top5 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+
+    .topbar,
+    .admin-topbar {
+        padding: 0 15px;
+    }
+
+    .brand {
+        font-size: 19px;
+    }
+
+    .live {
+        display: none;
+    }
+
+    .home-container {
+        width: 94%;
+        padding-top: 18px;
+    }
+
+    .top5 {
+        grid-template-columns: 1fr;
+    }
+
+    .rank-card {
+        min-height: 135px;
+    }
+
+    .board-header {
+        padding: 16px;
+    }
+
+    th,
+    td {
+        padding: 13px 14px;
+    }
+
+    .admin-container {
+        width: 94%;
+    }
+}
+
+/* =========================================================
+   SOUND TOGGLE + CLOSE HINT
+========================================================= */
+
+.sound-toggle {
+    position: fixed;
+    left: 18px;
+    bottom: 18px;
+    z-index: 500;
+    padding: 11px 17px;
+    background: #101414;
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 800;
+    box-shadow: 0 0 25px rgba(255,215,0,.12);
+    transition: .2s;
+}
+
+.sound-toggle.on {
+    border-color: var(--green);
+    color: var(--green);
+    box-shadow: 0 0 25px rgba(0,255,136,.1);
+}
+
+.money-close {
+    margin-top: 26px;
+    padding: 10px 20px;
+    background: rgba(0,0,0,.35);
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    position: relative;
+    z-index: 3;
+}
+
+button:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     HOME / DESK BOARD
+========================================================= -->
+
+<section id="homePage">
+
+    <header class="topbar">
+
+        <div class="brand">
+            DEPOSIT <span>DESK PRO</span>
+            <span class="brand-sep">-</span>
+            <span id="grandTotal">$0.00</span>
+        </div>
+
+        <div class="live">
+
+            <span class="live-dot"></span>
+
+            LIVE DESK BOARD
+
+        </div>
+
+    </header>
+
+
+    <main class="home-container">
+
+        <div class="top5-title">
+            🏆 TOP 5 AGENTS
+        </div>
+
+
+        <div
+            id="top5"
+            class="top5">
+        </div>
+
+
+        <section class="board-panel">
+
+            <div class="board-header">
+
+                <div class="board-title">
+                    🏠 GENERAL DEPOSIT BOARD <span style="color:var(--muted);font-size:12px;font-weight:700;letter-spacing:0">— PLACES 6+</span>
+                </div>
+
+                <div
+                    id="agentCount"
+                    class="agent-count">
+                    0 Agents
+                </div>
+
+            </div>
+
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Place
+                            </th>
+
+                            <th>
+                                Agent
+                            </th>
+
+                            <th>
+                                Last Deposit
+                            </th>
+
+                            <th>
+                                Total Deposit
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="boardBody">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <button
+        class="admin-launch"
+        onclick="openAdminLogin()">
+
+        ⚙ ADMIN
+
+    </button>
+
+
+    <button
+        id="soundToggle"
+        class="sound-toggle"
+        onclick="toggleSound()">
+
+        🔇 TAP TO ENABLE SOUND
+
+    </button>
+
+</section>
+
+
+<!-- =========================================================
+     LOGIN
+========================================================= -->
+
+<section id="loginPage">
+
+    <div class="login-box">
+
+        <div class="login-logo">
+            DEPOSIT <span>DESK PRO</span>
+        </div>
+
+        <div class="login-subtitle">
+            Administrator access
+        </div>
+
+
+        <div
+            id="loginError"
+            class="login-error">
+
+            Incorrect username or password.
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Username
+            </label>
+
+            <input
+                id="loginUsername"
+                type="text"
+                autocomplete="username"
+                placeholder="Username">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Password
+            </label>
+
+            <input
+                id="loginPassword"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Password">
+
+        </div>
+
+
+        <button
+            class="green-button"
+            onclick="loginAdmin()">
+
+            LOGIN
+
+        </button>
+
+
+        <button
+            class="secondary-button"
+            onclick="showHome()">
+
+            ← BACK TO DESK
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ADMIN
+========================================================= -->
+
+<section id="adminPage">
+
+    <header class="admin-topbar">
+
+        <div class="admin-title">
+
+            ⚙ <span>ADMIN</span> CONTROL
+
+        </div>
+
+
+        <div style="display:flex; gap:10px;">
+
+            <button
+                class="back-button"
+                onclick="showHome()">
+
+                ← DESK BOARD
+
+            </button>
+
+
+            <button
+                class="back-button"
+                onclick="logoutAdmin()">
+
+                LOG OUT
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <main class="admin-container">
+
+        <div class="admin-grid">
+
+            <!-- TOP UP -->
+
+            <section class="admin-card">
+
+                <h2>
+                    💰 Top Up / Deposit
+                </h2>
+
+
+                <div class="field">
+
+                    <label>
+                        Select Agent
+                    </label>
+
+                    <select
+                        id="depositAgent">
+                    </select>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Deposit Amount
+                    </label>
+
+                    <input
+                        id="depositAmount"
+                        type="number"
+                        min="0.01"
+                        step="0.01"
+                        placeholder="0.00">
+
+                </div>
+
+
+                <button
+                    class="green-button"
+                    onclick="processDeposit()">
+
+                    💰 TOP UP
+
+                </button>
+
+            </section>
+
+
+            <!-- ADD AGENT -->
+
+            <section class="admin-card">
+
+                <h2>
+                    ➕ Add Agent
+                </h2>
+
+
+                <div class="field">
+
+                    <label>
+                        Agent Name
+                    </label>
+
+                    <input
+                        id="newAgentName"
+                        type="text"
+                        placeholder="Agent name">
+
+                </div>
+
+
+                <button
+                    class="orange-button"
+                    onclick="addAgent()">
+
+                    ➕ ADD AGENT
+
+                </button>
+
+            </section>
+
+
+            <!-- AGENTS -->
+
+            <section class="admin-card">
+
+                <h2>
+                    👥 Agent Management
+                </h2>
+
+
+                <div
+                    id="adminAgentList"
+                    class="admin-agent-list">
+                </div>
+
+            </section>
+
+
+            <!-- DATA -->
+
+            <section class="admin-card">
+
+                <h2>
+                    🗄 Data Management
+                </h2>
+
+
+                <button
+                    class="secondary-button"
+                    onclick="exportData()">
+
+                    ⬇ EXPORT JSON
+
+                </button>
+
+
+                <button
+                    class="secondary-button"
+                    onclick="importData()">
+
+                    ⬆ IMPORT JSON
+
+                </button>
+
+
+                <button
+                    class="red-button"
+                    onclick="clearAllData()">
+
+                    🗑 CLEAR ALL DATA
+
+                </button>
+
+
+                <p style="
+                    color:#777;
+                    font-size:12px;
+                    line-height:1.6;
+                    margin-top:16px;
+                ">
+
+                    Clear All Data permanently removes every
+                    agent and every deposit from the live desk.
+
+                </p>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</section>
+
+
+<!-- =========================================================
+     MONEY POPUP
+========================================================= -->
+
+<div id="moneyOverlay">
+
+    <div class="money-content">
+
+        <div class="money-title">
+            MONEY MONEY MONEY
+        </div>
+
+
+        <div
+            id="moneyAgent"
+            class="money-agent">
+
+            Deposit received
+
+        </div>
+
+
+        <div
+            id="moneyAmount"
+            class="money-amount">
+
+            $0.00
+
+        </div>
+
+
+        <div class="money-subtitle">
+
+            TOP UP SUCCESSFUL
+
+        </div>
+
+
+        <button
+            class="money-close"
+            onclick="closeMoneyPopup()">
+
+            ✕ CLOSE
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+
+<div id="toast"></div>
+
+
+<!-- =========================================================
+     SONG
+========================================================= -->
+
+<audio
+    id="moneyAudio"
+    preload="auto">
+
+    <source
+        src="/audio/money-money-money.mp3"
+        type="audio/mpeg">
+
+</audio>
+
+
+<script>
+
+/* =========================================================
+   SETTINGS
+========================================================= */
+
+const API = "/api";
+
+const TOKEN_KEY = "deposit_desk_pro_admin_token";
+
+const SOUND_KEY = "deposit_desk_pro_sound";
+
+const MONEY_POPUP_DURATION = 15000;
+
+const POLL_INTERVAL = 3000;
+
+
+/*
+    Live data loaded from the server database.
+*/
+
+let agents = [];
+
+
+/*
+    Highest deposit id this screen has already seen.
+    Anything newer triggers the money popup.
+*/
+
+let lastDepositId = null;
+
+
+let moneyPopupTimer = null;
+
+let popupQueue = [];
+
+let popupOpen = false;
+
+let soundEnabled = false;
+
+let audioUnlocked = false;
+
+let pollTimer = null;
+
+
+/* =========================================================
+   HELPER
+========================================================= */
+
+function $(id) {
+
+    return document.getElementById(id);
+
+}
+
+
+function getToken() {
+
+    return sessionStorage.getItem(TOKEN_KEY) || "";
+
+}
+
+
+async function api(path, options = {}) {
+
+    const headers = { "Content-Type": "application/json" };
+
+    const token = getToken();
+
+    if (token) headers.Authorization = `Bearer ${token}`;
+
+
+    const response = await fetch(API + path, {
+        method: options.method || "GET",
+        headers,
+        body: options.body ? JSON.stringify(options.body) : undefined,
+        cache: "no-store"
+    });
+
+
+    let data = {};
+
+    try {
+
+        data = await response.json();
+
+    } catch (error) {
+
+        data = {};
+
+    }
+
+
+    if (!response.ok) {
+
+        if (response.status === 401 && path !== "/login") {
+
+            sessionStorage.removeItem(TOKEN_KEY);
+
+            if ($("adminPage").style.display === "block") {
+
+                openAdminLogin();
+
+            }
+
+        }
+
+        throw new Error(data.error || "Request failed");
+
+    }
+
+
+    return data;
+
+}
+
+
+async function withBusy(button, task) {
+
+    if (button) button.disabled = true;
+
+    try {
+
+        return await task();
+
+    } catch (error) {
+
+        showToast(error.message);
+
+    } finally {
+
+        if (button) button.disabled = false;
+
+    }
+
+}
+
+
+/* =========================================================
+   DATA / LIVE SYNC
+========================================================= */
+
+async function refreshData() {
+
+    const query =
+        lastDepositId === null
+            ? ""
+            : `?after=${lastDepositId}`;
+
+
+    const data = await api(`/board${query}`);
+
+
+    agents = data.agents || [];
+
+
+    if (lastDepositId !== null) {
+
+        (data.newDeposits || []).forEach(function(deposit) {
+
+            if (deposit.id > lastDepositId) {
+
+                queueMoneyPopup(deposit.agentName, deposit.amount);
+
+            }
+
+        });
+
+    }
+
+
+    lastDepositId = Math.max(
+        lastDepositId || 0,
+        data.latestDepositId || 0
+    );
+
+
+    renderHome();
+
+    if ($("adminPage").style.display === "block") {
+
+        renderAdmin();
+
+    }
+
+}
+
+
+function startPolling() {
+
+    clearTimeout(pollTimer);
+
+
+    const tick = async function() {
+
+        try {
+
+            await refreshData();
+
+            setLive(true);
+
+        } catch (error) {
+
+            console.warn("Sync error:", error);
+
+            setLive(false);
+
+        }
+
+        pollTimer = setTimeout(tick, POLL_INTERVAL);
+
+    };
+
+
+    tick();
+
+}
+
+
+function setLive(ok) {
+
+    const live = document.querySelector(".live");
+
+    if (!live) return;
+
+    live.lastChild.textContent = ok ? " LIVE DESK BOARD" : " RECONNECTING…";
+
+    live.querySelector(".live-dot").style.background = ok ? "" : "var(--red)";
+
+}
+
+
+/* =========================================================
+   PAGE CONTROL
+========================================================= */
+
+function hidePages() {
+
+    $("homePage").style.display = "none";
+
+    $("loginPage").style.display = "none";
+
+    $("adminPage").style.display = "none";
+
+}
+
+
+function showHome() {
+
+    hidePages();
+
+    $("homePage").style.display = "block";
+
+    renderHome();
+
+}
+
+
+function showAdmin() {
+
+    hidePages();
+
+    $("adminPage").style.display = "block";
+
+    renderAdmin();
+
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+function openAdminLogin() {
+
+    if (getToken()) {
+
+        showAdmin();
+
+        return;
+
+    }
+
+
+    hidePages();
+
+    $("loginPage").style.display = "flex";
+
+    $("loginUsername").value = "";
+
+    $("loginPassword").value = "";
+
+    $("loginError").style.display = "none";
+
+
+    setTimeout(function() {
+
+        $("loginUsername").focus();
+
+    }, 100);
+
+}
+
+
+async function loginAdmin() {
+
+    const username = $("loginUsername").value.trim();
+
+    const password = $("loginPassword").value;
+
+    const button = document.querySelector("#loginPage .green-button");
+
+
+    if (button) button.disabled = true;
+
+
+    try {
+
+        const data = await api("/login", {
+            method: "POST",
+            body: { username, password }
+        });
+
+
+        sessionStorage.setItem(TOKEN_KEY, data.token);
+
+        $("loginError").style.display = "none";
+
+        showAdmin();
+
+        showToast("Admin login successful");
+
+    } catch (error) {
+
+        $("loginError").textContent = error.message;
+
+        $("loginError").style.display = "block";
+
+    } finally {
+
+        if (button) button.disabled = false;
+
+    }
+
+}
+
+
+function logoutAdmin() {
+
+    sessionStorage.removeItem(TOKEN_KEY);
+
+    showHome();
+
+    showToast("Logged out");
+
+}
+
+
+/* =========================================================
+   HOME RENDER
+========================================================= */
+
+function renderHome() {
+
+    renderTop5();
+
+    renderBoard();
+
+
+    $("agentCount").textContent =
+        `${agents.length} ${agents.length === 1 ? "Agent" : "Agents"}`;
+
+    $("grandTotal").textContent = money(
+        agents.reduce(function(sum, agent) {
+            return sum + (Number(agent.total) || 0);
+        }, 0)
+    );
+
+}
+
+
+function rankedAgents() {
+
+    return [...agents].sort(function(a, b) {
+
+        return Number(b.total || 0) - Number(a.total || 0);
+
+    });
+
+}
+
+
+/* =========================================================
+   TOP 5
+========================================================= */
+
+function renderTop5() {
+
+    const container = $("top5");
+
+    container.innerHTML = "";
+
+
+    const ranking = rankedAgents().slice(0, 5);
+
+
+    for (let i = 0; i < 5; i++) {
+
+        const agent = ranking[i];
+
+        const card = document.createElement("div");
+
+
+        if (!agent) {
+
+            card.className = "rank-card";
+
+            card.innerHTML = `
+
+                <div class="rank-number">
+                    #${i + 1}
+                </div>
+
+                <div class="rank-empty">
+                    Waiting for agent
+                </div>
+
+            `;
+
+            container.appendChild(card);
+
+            continue;
+
+        }
+
+
+        let medal = `#${i + 1}`;
+
+        let className = "";
+
+
+        if (i === 0) {
+
+            medal = "🥇";
+
+            className = "gold";
+
+        } else if (i === 1) {
+
+            medal = "🥈";
+
+            className = "silver";
+
+        } else if (i === 2) {
+
+            medal = "🥉";
+
+            className = "bronze";
+
+        } else if (i === 3) {
+
+            medal = "🏅";
+
+        } else if (i === 4) {
+
+            medal = "🎖️";
+
+        }
+
+
+        card.className = `rank-card ${className}`;
+
+
+        card.innerHTML = `
+
+            <div class="rank-number">
+                ${medal}
+            </div>
+
+            <div class="rank-name">
+                ${escapeHTML(agent.name)}
+            </div>
+
+            <div class="rank-label">
+                Total Deposit
+            </div>
+
+            <div class="rank-total">
+                ${money(agent.total)}
+            </div>
+
+        `;
+
+
+        container.appendChild(card);
+
+    }
+
+}
+
+
+/* =========================================================
+   BOARD
+========================================================= */
+
+function renderBoard() {
+
+    const tbody = $("boardBody");
+
+    tbody.innerHTML = "";
+
+    const additionalAgents = rankedAgents().slice(5);
+
+    if (additionalAgents.length === 0) {
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="4">
+                    <div class="empty-board">
+                        <div class="empty-icon">📊</div>
+                        <div class="empty-title">No Additional Agents Yet</div>
+                        <div>Places 1–5 are shown above. Agents ranked 6 and below will appear here.</div>
+                    </div>
+                </td>
+            </tr>
+        `;
+
+        return;
+
+    }
+
+    additionalAgents.forEach(function(agent, index) {
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td><strong>#${index + 6}</strong></td>
+            <td><div class="agent-name">${escapeHTML(agent.name)}</div></td>
+            <td><span class="money">${money(agent.last)}</span></td>
+            <td><span class="money">${money(agent.total)}</span></td>
+        `;
+
+        tbody.appendChild(row);
+
+    });
+
+}
+
+
+/* =========================================================
+   ADMIN
+========================================================= */
+
+function renderAdmin() {
+
+    renderDepositSelect();
+
+    renderAdminAgentList();
+
+}
+
+
+function renderDepositSelect() {
+
+    const select = $("depositAgent");
+
+    const previous = select.value;
+
+    select.innerHTML = "";
+
+
+    if (agents.length === 0) {
+
+        const option = document.createElement("option");
+
+        option.value = "";
+
+        option.textContent = "No agents available";
+
+        select.appendChild(option);
+
+        return;
+
+    }
+
+
+    agents.forEach(function(agent) {
+
+        const option = document.createElement("option");
+
+        option.value = agent.id;
+
+        option.textContent = agent.name;
+
+        select.appendChild(option);
+
+    });
+
+
+    if (agents.some(function(a) { return String(a.id) === previous; })) {
+
+        select.value = previous;
+
+    }
+
+}
+
+
+/* =========================================================
+   ADD AGENT
+========================================================= */
+
+function addAgent() {
+
+    const name = $("newAgentName").value.trim();
+
+    const target = 0;
+
+
+    if (!name) {
+
+        showToast("Enter an agent name");
+
+        return;
+
+    }
+
+
+    withBusy(document.querySelector("#adminPage .orange-button"), async function() {
+
+        await api("/agents", {
+            method: "POST",
+            body: { name, target }
+        });
+
+
+        $("newAgentName").value = "";
+
+        await refreshData();
+
+        renderAdmin();
+
+        showToast(`${name} added`);
+
+    });
+
+}
+
+
+/* =========================================================
+   TOP UP / PROCESS DEPOSIT
+========================================================= */
+
+function processDeposit() {
+
+    const agentId = $("depositAgent").value;
+
+    const amount = parseFloat($("depositAmount").value);
+
+
+    if (!agentId) {
+
+        showToast("Add an agent first");
+
+        return;
+
+    }
+
+
+    if (isNaN(amount) || amount <= 0) {
+
+        showToast("Enter a valid deposit amount");
+
+        return;
+
+    }
+
+
+    unlockAudio();
+
+
+    withBusy(document.querySelector("#adminPage .green-button"), async function() {
+
+        const data = await api("/deposits", {
+            method: "POST",
+            body: { agentId: Number(agentId), amount }
+        });
+
+
+        $("depositAmount").value = "";
+
+
+        // Show the popup right away and mark it seen so the
+        // live sync does not show it a second time.
+        lastDepositId = Math.max(lastDepositId || 0, data.deposit.id);
+
+        queueMoneyPopup(data.deposit.agentName, data.deposit.amount);
+
+
+        await refreshData();
+
+        renderAdmin();
+
+    });
+
+}
+
+
+/* =========================================================
+   MONEY POPUP + 15 SECOND SONG
+========================================================= */
+
+function queueMoneyPopup(agentName, amount) {
+
+    popupQueue.push({ agentName, amount });
+
+    if (!popupOpen) showNextPopup();
+
+}
+
+
+function showNextPopup() {
+
+    const next = popupQueue.shift();
+
+    if (!next) {
+
+        popupOpen = false;
+
+        return;
+
+    }
+
+    popupOpen = true;
+
+    showMoneyAnimation(next.agentName, next.amount);
+
+}
+
+
+function showMoneyAnimation(agentName, amount) {
+
+    const overlay = $("moneyOverlay");
+
+    const audio = $("moneyAudio");
+
+
+    clearTimeout(moneyPopupTimer);
+
+
+    $("moneyAgent").innerHTML = `Agent: <strong>${escapeHTML(agentName)}</strong>`;
+
+    $("moneyAmount").textContent = money(amount);
+
+
+    overlay.style.display = "flex";
+
+
+    if (audio && soundEnabled) {
+
+        audio.pause();
+
+        audio.currentTime = 0;
+
+        audio.volume = 1;
+
+
+        const playPromise = audio.play();
+
+        if (playPromise !== undefined) {
+
+            playPromise.catch(function(error) {
+
+                console.warn("Audio playback blocked:", error);
+
+                setSoundButton(false);
+
+            });
+
+        }
+
+    }
+
+
+    overlay.querySelectorAll(".cash").forEach(function(element) {
+
+        element.remove();
+
+    });
+
+
+    const symbols = ["💵", "💸", "💰", "🤑"];
+
+
+    for (let i = 0; i < 50; i++) {
+
+        const cash = document.createElement("div");
+
+        cash.className = "cash";
+
+        cash.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+
+        cash.style.left = Math.random() * 100 + "%";
+
+        cash.style.animationDuration = (2 + Math.random() * 4) + "s";
+
+        cash.style.animationDelay = Math.random() * 1.5 + "s";
+
+        overlay.appendChild(cash);
+
+
+        setTimeout(function() {
+
+            if (cash.parentNode) cash.remove();
+
+        }, 7000);
+
+    }
+
+
+    moneyPopupTimer = setTimeout(closeMoneyPopup, MONEY_POPUP_DURATION);
+
+}
+
+
+function closeMoneyPopup() {
+
+    const audio = $("moneyAudio");
+
+
+    clearTimeout(moneyPopupTimer);
+
+    moneyPopupTimer = null;
+
+
+    if (audio) {
+
+        audio.pause();
+
+        audio.currentTime = 0;
+
+    }
+
+
+    $("moneyOverlay").style.display = "none";
+
+
+    $("moneyOverlay").querySelectorAll(".cash").forEach(function(element) {
+
+        element.remove();
+
+    });
+
+
+    popupOpen = false;
+
+    setTimeout(showNextPopup, 400);
+
+}
+
+
+/* =========================================================
+   SOUND
+   Browsers only allow audio after the viewer interacts
+   with the page, so the desk screen asks for one tap.
+========================================================= */
+
+function unlockAudio() {
+
+    const audio = $("moneyAudio");
+
+    if (!audio || audioUnlocked) return;
+
+
+    audio.muted = true;
+
+
+    const attempt = audio.play();
+
+
+    const done = function() {
+
+        audio.pause();
+
+        audio.currentTime = 0;
+
+        audio.muted = false;
+
+    };
+
+
+    if (attempt && attempt.then) {
+
+        attempt
+            .then(function() {
+
+                audioUnlocked = true;
+
+                done();
+
+            })
+            .catch(done);
+
+    } else {
+
+        audioUnlocked = true;
+
+        done();
+
+    }
+
+
+    if (localStorage.getItem(SOUND_KEY) !== "off") setSoundButton(true);
+
+}
+
+
+function setSoundButton(on) {
+
+    soundEnabled = on;
+
+    const button = $("soundToggle");
+
+    if (!button) return;
+
+    button.classList.toggle("on", on);
+
+    button.textContent = on ? "🔊 SOUND ON" : "🔇 TAP TO ENABLE SOUND";
+
+}
+
+
+function toggleSound() {
+
+    if (soundEnabled) {
+
+        localStorage.setItem(SOUND_KEY, "off");
+
+        setSoundButton(false);
+
+        const audio = $("moneyAudio");
+
+        if (audio) audio.pause();
+
+        showToast("Sound off");
+
+        return;
+
+    }
+
+
+    localStorage.removeItem(SOUND_KEY);
+
+    unlockAudio();
+
+    setSoundButton(true);
+
+    showToast("Sound on — the song plays on every top up");
+
+}
+
+
+/* =========================================================
+   DELETE AGENT
+========================================================= */
+
+function deleteAgent(id) {
+
+    const agent = agents.find(function(a) {
+
+        return String(a.id) === String(id);
+
+    });
+
+
+    if (!agent) return;
+
+
+    if (!confirm(`Delete ${agent.name} and all deposit data?`)) return;
+
+
+    withBusy(null, async function() {
+
+        await api(`/agents/${agent.id}`, { method: "DELETE" });
+
+        await refreshData();
+
+        renderAdmin();
+
+        showToast(`${agent.name} deleted`);
+
+    });
+
+}
+
+
+/* =========================================================
+   ADMIN AGENT LIST
+========================================================= */
+
+function renderAdminAgentList() {
+
+    const container = $("adminAgentList");
+
+    container.innerHTML = "";
+
+
+    if (agents.length === 0) {
+
+        container.innerHTML = `
+
+            <div style="
+                color:#666;
+                text-align:center;
+                padding:35px 10px;
+            ">
+
+                No agents yet.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    agents.forEach(function(agent) {
+
+        const row = document.createElement("div");
+
+        row.className = "admin-agent-row";
+
+        row.innerHTML = `
+
+            <div class="admin-agent-info">
+
+                <strong>
+                    ${escapeHTML(agent.name)}
+                </strong>
+
+                <small>
+                    Last: ${money(agent.last)} &nbsp; • &nbsp;
+                    Total: ${money(agent.total)}
+                </small>
+
+            </div>
+
+
+            <button
+                class="delete-agent"
+                onclick="deleteAgent(${Number(agent.id)})">
+
+                DELETE
+
+            </button>
+
+        `;
+
+        container.appendChild(row);
+
+    });
+
+}
+
+
+/* =========================================================
+   CLEAR ALL DATA
+========================================================= */
+
+function clearAllData() {
+
+    const confirmed = confirm(
+        "CLEAR ALL DATA?\n\n" +
+        "This will permanently remove ALL agents and ALL deposits."
+    );
+
+
+    if (!confirmed) return;
+
+
+    popupQueue = [];
+
+    closeMoneyPopup();
+
+
+    withBusy(document.querySelector("#adminPage .red-button"), async function() {
+
+        await api("/data", { method: "DELETE" });
+
+        lastDepositId = 0;
+
+        await refreshData();
+
+        renderAdmin();
+
+        showToast("All data cleared");
+
+    });
+
+}
+
+
+/* =========================================================
+   EXPORT
+========================================================= */
+
+function exportData() {
+
+    const data = JSON.stringify(agents, null, 2);
+
+    const blob = new Blob([data], { type: "application/json" });
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+
+    link.href = url;
+
+    link.download = "deposit-desk-data.json";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    URL.revokeObjectURL(url);
+
+    showToast("Data exported");
+
+}
+
+
+/* =========================================================
+   IMPORT
+========================================================= */
+
+function importData() {
+
+    const input = document.createElement("input");
+
+    input.type = "file";
+
+    input.accept = ".json,application/json";
+
+
+    input.onchange = function(event) {
+
+        const file = event.target.files[0];
+
+        if (!file) return;
+
+
+        const reader = new FileReader();
+
+
+        reader.onload = function(e) {
+
+            let imported;
+
+            try {
+
+                imported = JSON.parse(e.target.result);
+
+                if (!Array.isArray(imported)) throw new Error("Invalid data");
+
+            } catch (error) {
+
+                alert("Invalid JSON file.");
+
+                return;
+
+            }
+
+
+            if (!confirm(`Replace the live desk with ${imported.length} imported agents?`)) return;
+
+
+            withBusy(null, async function() {
+
+                await api("/import", {
+                    method: "POST",
+                    body: { agents: imported }
+                });
+
+                await refreshData();
+
+                renderAdmin();
+
+                showToast("Data imported");
+
+            });
+
+        };
+
+
+        reader.readAsText(file);
+
+    };
+
+
+    input.click();
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer = null;
+
+function showToast(message) {
+
+    const toast = $("toast");
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer = setTimeout(function() {
+
+        toast.classList.remove("show");
+
+    }, 2800);
+
+}
+
+
+/* =========================================================
+   MONEY FORMAT
+========================================================= */
+
+function money(value) {
+
+    const number = Number(value) || 0;
+
+    return new Intl.NumberFormat("en-US", {
+
+        style: "currency",
+
+        currency: "USD",
+
+        minimumFractionDigits: 2
+
+    }).format(number);
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+
+        .replaceAll("&", "&amp;")
+
+        .replaceAll("<", "&lt;")
+
+        .replaceAll(">", "&gt;")
+
+        .replaceAll('"', "&quot;")
+
+        .replaceAll("'", "&#039;");
+
+}
+
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+document.addEventListener("keydown", function(event) {
+
+    if ($("loginPage").style.display === "flex" && event.key === "Enter") {
+
+        loginAdmin();
+
+    }
+
+
+    if ($("adminPage").style.display === "block" && event.key === "Enter") {
+
+        if (document.activeElement === $("depositAmount")) processDeposit();
+
+        if (
+            document.activeElement === $("newAgentName")
+        ) addAgent();
+
+    }
+
+
+    if (event.key === "Escape" && $("moneyOverlay").style.display === "flex") {
+
+        closeMoneyPopup();
+
+    }
+
+});
+
+
+/* Any first interaction with the page unlocks the song. */
+
+document.addEventListener("pointerdown", function(event) {
+
+    if (event.target.closest("#soundToggle")) return;
+
+    if (localStorage.getItem(SOUND_KEY) !== "off") unlockAudio();
+
+}, { once: true });
+
+
+/* =========================================================
+   START
+========================================================= */
+
+window.addEventListener("DOMContentLoaded", function() {
+
+    showHome();
+
+    startPolling();
+
+});
+
+
+document.addEventListener("visibilitychange", function() {
+
+    if (!document.hidden) startPolling();
+
+});
+
+</script>
+
+</body>
+</html>

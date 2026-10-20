@@ -1,0 +1,15 @@
+{
+  "name": "tabneed-railway",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --experimental-strip-types server.mjs"
+  },
+  "engines": {
+    "node": ">=22.16.0"
+  },
+  "dependencies": {
+    "pg": "^8.16.3"
+  }
+}
